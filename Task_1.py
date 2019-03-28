@@ -124,7 +124,7 @@ a_centred
 # Затем поделите a_centered_sp на N-1, где N - число наблюдений.
 
 a_centered_sp = np.dot(a[:,0], a[:,1])
-a_centered_sp
+print (a_centered_sp)
 #%%
-arraysize = a_centered_sp/(np.size(a_centred))-1
+arraysize = a_centered_sp/((np.size(a_centred))-1)
 arraysize
