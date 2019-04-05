@@ -28,7 +28,7 @@ authors_price
 
 #%%
 top5 = authors_price.nlargest(5, 'price')
-
+top5
 # Задание 4
 # Создайте датафрейм authors_stat на основе информации из authors_price.
 # В датафрейме authors_stat должны быть четыре столбца:
@@ -37,10 +37,9 @@ top5 = authors_price.nlargest(5, 'price')
 # минимальная, максимальная и средняя цена на книги этого автора.
 #%%
 import pandas as pd
-author_stat = pd.DataFrame( {'author_name': authors_price.groupby('author_id')['author_name'].unique(),
-                                                'min_price': authors_price.groupby('author_id')['price'].min(),
-                                                'max_price': authors_price.groupby('author_id')['price'].max(),
-                                                'mean_price': authors_price.groupby('author_id')['price'].mean()}    )
+author_stat = pd.DataFrame( {'min_price': authors_price.groupby('author_name')['price'].min(),
+                                                'max_price': authors_price.groupby('author_name')['price'].max(),
+                                                'mean_price': authors_price.groupby('author_name')['price'].mean()}    )
 author_stat
 
 # * Задание 5
@@ -62,9 +61,15 @@ author_stat
 # Удостоверьтесь, что датафреймы book_info и book_info2 идентичны.
 #%%
 authors_price.loc[ :,'cover'] = ['твердая', 'мягкая', 'мягкая', 'твердая', 'твердая', 'мягкая', 'мягкая']
+authors_price
 #%%
-import pandas as pd
-pd.pivot_table?
+authors_price.drop("author_id", axis=1, inplace=True)
+book_info=authors_price.pivot_table(index='author_name', columns='cover', aggfunc = 'sum', fill_value = 0)
+book_info
 
 #%%
+book_info.to_pickle('book_info.pkl')
+book_info2 = pd.read_pickle('book_info.pkl')
+#%%
+book_info.equals(book_info2)
 
